@@ -1,0 +1,28 @@
+<!-- The list projects view -->
+<section data-ng-controller="ProjectsController" data-ng-init="find()">
+	<h1>Meus Projetos</h1>
+	<br>
+	<div class="col-md-4 pl-0" data-ng-repeat="project in projects">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><a data-ng-href="#!/projects/{{project._id}}" data-ng-bind="project.title"></a></h3>
+			</div>
+			<div class="panel-body">
+				<p data-ng-bind="project.description"></p>
+				<p data-ng-bind="project.deadline | date:'shortDate'"></p>
+				<br>
+				<small data-ng-bind="project.created | date:'short'"></small>
+				<small>/</small>
+				<small data-ng-bind="project.creator.fullName"></small>
+			</div>
+		</div>
+	</div>
+
+	<!-- If there are no projects in the list, suggest the user's create a new project -->
+	<div data-ng-hide="!projects || projects.length">
+		<h3>Nenhum projeto aqui, que tal <a href="/#!/projects/create">criar um</a>?</h3>
+	</div>
+	<div class="clearfix"></div>
+	<hr>
+	<a class="btn btn-sm btn-danger" href="/#!/">Voltar</a>
+</section>

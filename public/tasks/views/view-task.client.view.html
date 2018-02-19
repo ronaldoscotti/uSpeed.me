@@ -1,0 +1,79 @@
+<!-- The task view -->
+<section data-ng-controller="TasksController" data-ng-init="findOne()">
+
+	<h1>
+		<div class="pull-left" data-ng-bind="task.title"></div>
+		<i class="fa fa-angle-right text-gray pull-left ml-25 mt-5"></i>
+		<div ng-repeat="project in projects">
+			<small class="text-gray pull-left mt-12" ng-show="task.project == project._id" data-ng-bind="project.title"></small>
+		</div>
+	</h1>
+
+	<!-- Show the editing buttons to the task creator -->
+	<div>
+		<a class="btn btn-xs btn-default ml-25 mt-15" href="/#!/tasks/{{task._id}}/edit"><i class="fa fa-pencil"></i> Editar</a>
+		<a data-ng-show="authentication.user._id == task.creator._id" class="btn btn-xs btn-danger mt-15"  href="/#!/" data-ng-click="delete();"><i class="fa fa-trash-o"></i> Apagar</a>
+	</div>
+	<hr>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="col-md-12">
+				<small>
+					<em data-ng-bind="task.created | amCalendar"></em>
+					<em>por</em>
+					<em data-ng-bind="task.creator.fullName"></em>
+				</small>
+			</div>
+
+			<div class="col-md-12">
+				<div class="panel-item">
+					<b>Descrição:</b>
+					<p data-ng-bind="task.description"></p>
+				</div>
+
+				<div class="panel-item">
+					<b>Prazo de entrega:</b>
+					<p data-ng-bind="task.deadline | amCalendar"></p>
+				</div>
+
+				<div class="panel-item">
+					<div class="pull-left">
+						<b>Responsável:</b>
+						<div ng-repeat="user in users">
+							<p ng-show="task.designated == user._id" data-ng-bind="user.fullName"></p>
+						</div>
+					</div>
+					<div class="pull-right mr-15">
+						<b>Status:</b>
+						<div ng-show="task.status == 'Por fazer'">
+							<div class="btn btn-warning btn-xs" data-ng-bind="task.status"></div>
+						</div>
+						<div ng-show="task.status == 'Fazendo'">
+							<div class="btn btn-primary btn-xs" data-ng-bind="task.status"></div>
+						</div>
+						<div ng-show="task.status == 'Feito'">
+							<div class="btn btn-success btn-xs" data-ng-bind="task.status"></div>
+						</div>
+						<div ng-show="task.status == 'Cancelado'">
+							<div class="btn btn-danger btn-xs" data-ng-bind="task.status"></div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="panel-item">
+					<b>Sendo:</b>
+					<p data-ng-bind="task.being"></p>
+					<b>Eu posso:</b>
+					<p data-ng-bind="task.iCan"></p>
+					<b>Para que:</b>
+					<p data-ng-bind="task.soThat"></p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<hr>
+	<a class="btn btn-sm btn-danger" href="/#!/tasks/"><i class="fa fa-chevron-left"></i> Voltar</a>
+
+</section>

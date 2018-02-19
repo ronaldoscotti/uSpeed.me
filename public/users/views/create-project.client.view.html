@@ -1,0 +1,35 @@
+<!-- The create project view -->
+<section data-ng-controller="ProjectsController">
+	<div class="col-md-8">
+	<h1>Novo Projeto</h1>
+	<!-- The new project form -->
+	<form data-ng-submit="create()" novalidate>
+		<div>
+			<label for="title">Nome do Projeto</label>
+			<div>
+				<input class="form-control" type="text" data-ng-model="title" id="title" placeholder="Nome do Projeto" required>
+			</div>
+		</div>
+		<div>
+			<label for="deadline">Prazo de Entrega</label>
+			<div>
+				<input class="form-control" type="date" data-ng-model="deadline" id="deadline" placeholder="Prazo de Entrega" required>
+			</div>
+		</div>
+		<div>
+			<label for="description">Descrição</label>
+			<div>
+				<textarea class="form-control"  data-ng-model="description" id="description" cols="30" rows="10" placeholder="Descrição do Projeto"></textarea>
+			</div>
+		</div>
+		<div>
+			<button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Salvar</button>
+			<a class="btn btn-danger" href="/#!/projects/"><i class="fa fa-ban"></i> Cancelar</a>
+		</div>
+		<!-- The error message element -->
+		<div data-ng-show="error">
+			<strong data-ng-bind="error"></strong>
+		</div>
+	</form>
+	</div>
+</section>

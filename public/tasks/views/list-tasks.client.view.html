@@ -1,0 +1,214 @@
+<!-- The list projects view -->
+<section data-ng-controller="TasksController" data-ng-init="find()" class="mt-15">
+	<div class="col-md-5">
+		<h1>
+			Tarefas
+			<a href="/#!/tasks/create" class="btn btn-sm btn-info btn-table-top"><i class="fa fa-plus"></i> Nova tarefa</a>
+		</h1>
+	</div>
+
+	<div class="col-md-7 p-0 mt-15">
+
+		<div class="col-md-2 pl-0">
+			<a ng-show="kanban == false" href="javascript:;" ng-click="showKanban()" class="btn btn-sm btn-primary mt-22"><i class="fa fa-folder-o"></i> Kanban</a>
+			<a ng-show="kanban == true" href="javascript:;" ng-click="showKanban()" class="btn btn-sm btn-primary mt-22"><i class="fa fa-list"></i> Listagem</a>
+		</div>
+
+		<div class="col-md-3 pl-0">
+			<label for="lookingForProject">Projeto</label>
+			<select class="form-control input-xs" ng-model="lookingForProject" id="lookingForProject">
+				<option value="" selected="">Todos</option>
+				<option value="{{project.title}}" ng-repeat="project in projects">{{project.title}}</option>
+			</select>
+		</div>
+
+		<div class="col-md-3 pl-0">
+			<label for="lookingForStatus">Status</label>
+			<input class="form-control" type="text" placeholder="Todos" disabled="disabled" ng-show="kanban == true">
+
+			<select class="form-control input-sm" ng-model="lookingForStatus" id="lookingForStatus" ng-show="kanban == false">
+				<option value="" selected="">Todos</option>
+				<option value="Por fazer">Por fazer</option>
+				<option value="Fazendo">Fazendo</option>
+				<option value="Feito">Feito</option>
+				<option value="Cancelado">Cancelado</option>
+			</select>
+		</div>
+		<div class="col-md-4 p-0">
+			<label for="lookingForDesignated">Responsável</label>
+			<select class="form-control input-sm" ng-model="lookingForDesignated" id="lookingForDesignated">
+				<option value="" selected="">Todos</option>
+				<option value="{{user.fullName}}" ng-repeat="user in users">{{user.fullName}}</option>
+			</select>
+		</div>
+
+	</div>
+
+	<div class="clearfix"></div>
+	<hr>
+
+	<table ng-show="kanban == false" class="table table-responsive table-striped">
+		<thead>
+			<td><a href="javascript:;" ng-click="orderingBy('title')">Título <i class="fa fa-sort"></i></a></td>
+			<td><a href="javascript:;" ng-click="orderingBy('project.title')">Projeto <i class="fa fa-sort"></i></a></td>
+			<td><a href="javascript:;" ng-click="orderingBy('status')">Status <i class="fa fa-sort"></i></a></td>
+			<td><a href="javascript:;" ng-click="orderingBy('deadline')">Prazo <i class="fa fa-sort"></i></a></td>
+			<td><a href="javascript:;" ng-click="orderingBy('designated.fullName')">Responsável <i class="fa fa-sort"></i></a></td>
+			<td>Ações</td>
+		</thead>
+		<tbody>
+			<tr data-ng-repeat="task in tasks | filter:{status: lookingForStatus} | filter:{designated: {fullName: lookingForDesignated}} | filter:{project: {title: lookingForProject}} | orderBy:sortingRule:sortingDirection">
+				<td><a data-ng-href="#!/tasks/{{task._id}}" data-ng-bind="task.title"></a></td>
+				<td data-ng-bind="task.project.title"></td>
+
+				<!-- Check what is the situation of the task and give the correct badge -->
+				<td ng-show="task.status == 'Por fazer'">
+					<div class="btn btn-warning btn-xs" data-ng-bind="task.status"></div>
+				</td>
+				<td ng-show="task.status == 'Fazendo'">
+					<div class="btn btn-primary btn-xs" data-ng-bind="task.status"></div>
+				</td>
+				<td ng-show="task.status == 'Feito'">
+					<div class="btn btn-success btn-xs" data-ng-bind="task.status"></div>
+				</td>
+				<td ng-show="task.status == 'Cancelado'">
+					<div class="btn btn-danger btn-xs" data-ng-bind="task.status"></div>
+				</td>
+
+				<td data-ng-bind="task.deadline | date:'shortDate'"></td>
+				<td data-ng-bind="task.designated.fullName"></td>
+				<td>
+					<a data-ng-href="/#!/tasks/{{task._id}}" class="btn btn-xs btn-info"><i class="fa fa-eye"></i> Ver</a>
+					<a data-ng-href="/#!/tasks/{{task._id}}/edit" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> Editar</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+
+	<div ng-show="kanban == true">
+
+		<div class="col-md-3 p-0">
+			<div class="panel panel-default">
+				<div class="panel-heading">Por fazer</div>
+
+				<div class="panel-body">
+
+					<div class="panel panel-default post-it mb-10" data-ng-repeat="task in tasks | filter:{status: 'Por fazer'} | filter:{designated: {fullName: lookingForDesignated}} | filter:{project: {title: lookingForProject}}">
+						<div class="panel-heading p-5">
+							<p data-ng-bind="task.title | limitTo: 22" class="pull-left m-0"></p>
+							<a data-ng-href="#!/tasks/{{task._id}}" class="pull-right ml-5">
+								<i class="fa fa-eye"></i>
+							</a>
+							<a data-ng-href="#!/tasks/{{task._id}}/edit" class="pull-right">
+								<i class="fa fa-pencil"></i>
+							</a>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-body p-10">
+							<p>Projeto: <span data-ng-bind="task.project.title"></span></p>
+							<p>Prazo: <span data-ng-bind="task.deadline | date:'shortDate'"></span></p>
+							<p class="m-0">Responsável:</p>
+							<span data-ng-bind="task.designated.fullName"></span>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-3 p-0">
+			<div class="panel panel-default">
+				<div class="panel-heading">Fazendo</div>
+				<div class="panel-body">
+
+					<div class="panel panel-default post-it mb-10" data-ng-repeat="task in tasks | filter:{status: 'Fazendo'} | filter:{designated: {fullName: lookingForDesignated}} | filter:{project: {title: lookingForProject}}">
+						<div class="panel-heading p-5">
+							<p data-ng-bind="task.title | limitTo: 22" class="pull-left m-0"></p>
+							<a data-ng-href="#!/tasks/{{task._id}}" class="pull-right ml-5">
+								<i class="fa fa-eye"></i>
+							</a>
+							<a data-ng-href="#!/tasks/{{task._id}}/edit" class="pull-right">
+								<i class="fa fa-pencil"></i>
+							</a>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-body p-10">
+							<p>Projeto: <span data-ng-bind="task.project.title"></span></p>
+							<p>Prazo: <span data-ng-bind="task.deadline | date:'shortDate'"></span></p>
+							<p class="m-0">Responsável:</p>
+							<span data-ng-bind="task.designated.fullName"></span>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-3 p-0">
+			<div class="panel panel-default">
+				<div class="panel-heading">Feito</div>
+				<div class="panel-body">
+
+					<div class="panel panel-default post-it mb-10" data-ng-repeat="task in tasks | filter:{status: 'Feito'} | filter:{designated: {fullName: lookingForDesignated}} | filter:{project: {title: lookingForProject}}">
+						<div class="panel-heading p-5">
+							<p data-ng-bind="task.title | limitTo: 22" class="pull-left m-0"></p>
+							<a data-ng-href="#!/tasks/{{task._id}}" class="pull-right ml-5">
+								<i class="fa fa-eye"></i>
+							</a>
+							<a data-ng-href="#!/tasks/{{task._id}}/edit" class="pull-right">
+								<i class="fa fa-pencil"></i>
+							</a>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-body p-10">
+							<p>Projeto: <span data-ng-bind="task.project.title"></span></p>
+							<p>Prazo: <span data-ng-bind="task.deadline | date:'shortDate'"></span></p>
+							<p class="m-0">Responsável:</p>
+							<span data-ng-bind="task.designated.fullName"></span>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-3 p-0">
+
+			<div class="panel panel-default">
+				<div class="panel-heading">Cancelado</div>
+				<div class="panel-body">
+
+					<div class="panel panel-default post-it mb-10" data-ng-repeat="task in tasks | filter:{status: 'Cancelado'} | filter:{designated: {fullName: lookingForDesignated}} | filter:{project: {title: lookingForProject}}">
+						<div class="panel-heading p-5">
+							<p data-ng-bind="task.title | limitTo: 22" class="pull-left m-0"></p>
+							<a data-ng-href="#!/tasks/{{task._id}}" class="pull-right ml-5">
+								<i class="fa fa-eye"></i>
+							</a>
+							<a data-ng-href="#!/tasks/{{task._id}}/edit" class="pull-right">
+								<i class="fa fa-pencil"></i>
+							</a>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-body p-10">
+							<p>Projeto: <span data-ng-bind="task.project.title"></span></p>
+							<p>Prazo: <span data-ng-bind="task.deadline | date:'shortDate'"></span></p>
+							<p class="m-0">Responsável:</p>
+							<span data-ng-bind="task.designated.fullName"></span>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- If there are no tasks in the list, suggest the user's create a new task -->
+	<div data-ng-hide="!tasks || tasks.length">
+		<h3>Nenhuma tarefa aqui, que tal <a href="/#!/tasks/create">criar uma</a>?</h3>
+	</div>
+	<div class="clearfix"></div>
+	<hr>
+	<a class="btn btn-sm btn-danger" href="/#!/"><i class="fa fa-chevron-left"></i> Voltar</a>
+</section>

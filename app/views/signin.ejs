@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org">
+<head>
+	<!-- Use the 'title' property to render a page title  -->
+	<title><%= title %> - uSpeed.me</title>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" type="image/png" href="assets/img/favicon.png"/>
+
+	<link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/css/login.css">
+
+	<link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,400italic' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+	<div class="container">
+		<div class="col-md-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 col-md-offset-4">
+			<!-- Display flash messages  -->
+			<img src="assets/img/login/logo.png" alt="uSpeed.me" class="img-responsive logo"/>
+			<% for(var i in messages) { %>
+				<div class="flash alert alert-danger"><%= messages[i] %></div>
+				<% } %>
+
+				<div class="panel panel-login">
+					<div class="panel-body">
+						<div class="content">
+							<h3 class="text-center">Bem vindo de volta! :)</h3>
+							<hr>
+							<p class="text-center">Faça login para acessar sua conta:</p>
+							<!-- Render the signin form  -->
+							<form action="/signin" method="post">
+								<div>
+									<input class="form-control" type="text" name="username" placeholder="Usuário"/>
+								</div>
+								<div>
+									<input class="form-control" type="password" name="password" placeholder="Senha"/>
+								</div>
+								<div>
+									<button type="submit" class="btn btn-login btn-block">ENTRAR</button>
+								</div>
+								<p class="text-center footer-text">Não tem uma conta? <b><a href="/signup">Cadastre-se!</a></b></p>
+							</form>
+						</div>
+					</div>
+				</div>
+				<!--
+				<p class="text-center text-white">
+					Ou entre com sua rede social:<br>
+					<a href="/oauth/facebook">
+						<span class="fa-stack fa-lg">
+							<i class="fa fa-circle fa-stack-2x text-blue"></i>
+							<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+						</span>
+					</a>
+
+					<a href="/oauth/twitter">
+						<span class="fa-stack fa-lg">
+							<i class="fa fa-circle fa-stack-2x text-light-blue"></i>
+							<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+						</span>
+					</a>
+
+					<a href="/oauth/google">
+						<span class="fa-stack fa-lg">
+							<i class="fa fa-circle fa-stack-2x text-red"></i>
+							<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+						</span>
+					</a>
+				</p>
+			-->
+			</div>
+		</div>
+		<script type="text/javascript" src="/lib/angular/angular.js"></script>
+	</body>
+	</html>

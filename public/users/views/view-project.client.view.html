@@ -1,0 +1,20 @@
+<!-- The project view -->
+<section data-ng-controller="ProjectsController" data-ng-init="findOne()">
+	<h1 data-ng-bind="project.title"></h1>
+	<!-- Show the editing buttons to the project creator -->
+	<div data-ng-show="authentication.user._id == project.creator._id">
+		<a class="btn btn-sm btn-default" href="/#!/projects/{{project._id}}/edit">Editar</a>
+		<a class="btn btn-sm btn-danger"  href="/#!/" data-ng-click="delete();">Apagar</a>
+	</div>
+	<hr>
+	<small>
+		<em>Criado em</em>
+		<em data-ng-bind="project.created | date:'mediumDate'"></em>
+		<em>por</em>
+		<em data-ng-bind="project.creator.fullName"></em>
+	</small>
+	<p data-ng-bind="project.description"></p>
+	<p data-ng-bind="project.deadline | date:'shortDate'"></p>
+	<hr>
+	<a  class="btn btn-sm btn-danger" href="/#!/projects/">Voltar</a>
+</section>

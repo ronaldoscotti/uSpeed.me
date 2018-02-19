@@ -1,0 +1,23 @@
+<!-- Include de header partial -->
+<%- include partials/header.ejs %>
+	<%- include partials/navs.ejs %>
+
+	<div class="container">
+		<!-- Render AngularJS views  -->
+		<section ng-view></section>
+	</div>
+
+	<!-- Render the user object -->
+	<script type="text/javascript">
+		window.user = <%- user || 'null' %>;
+	</script>
+
+	<%- include partials/footer.ejs %>
+
+	<!-- Load the local libraries (Bootstrap, Angular...) -->
+	<%- include partials/local-libraries.ejs %>
+	<!-- Include the partial tha load all the scripts and modules -->
+	<%- include partials/modules.ejs %>
+	<%- include ../../public/chat/views/chat.client.view.html %>
+</body>
+</html>

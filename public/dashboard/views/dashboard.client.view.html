@@ -1,0 +1,46 @@
+<!-- The example view -->
+<section ng-controller="DashboardController">
+
+	<div data-ng-show="!authentication.user">
+		<a href="/signup">Signup</a>
+		<a href="/signin">Signin</a>
+	</div>
+
+	<div class="col-md-12">
+		<div data-ng-show="authentication.user">
+			<h1>Olá
+				<span data-ng-bind="authentication.user.fullName"></span>!
+			</h1>
+			<hr>
+		</div>
+	</div>
+
+	<div class="col-md-5">
+		<div class="panel panel-default">
+			<div class="panel-heading"><i class="fa fa-user"></i> Minhas Tarefas por status</div>
+			<div class="panel-body bg-gray">
+				<canvas id="radar" class="chart chart-radar" chart-data="myTasksData" chart-labels="myTasksLabels" chart-series="myTasksSeries" chart-legend="true"></canvas>
+			</div>
+		</div>
+		<h2 class="pull-left dashboard-box ml-5"><span class="label label-success">{{projectsLength}}</span><small> Projetos</small></h2>
+		<h2 class="pull-left dashboard-box ml-5"><span class="label label-info">{{tasksLength}}</span><small> Tarefas</small></h2>
+		<h2 class="pull-left dashboard-box ml-5"><span class="label label-warning">{{usersLength}}</span><small> Usuários</small></h2>
+	</div>
+
+	<div class="col-md-7">
+
+		<div class="panel panel-default">
+			<div class="panel-heading"><i class="fa fa-users"></i> Tarefas por status - EQUIPE</div>
+			<div class="panel-body bg-gray">
+				<canvas id="doughnut" class="chart chart-doughnut" chart-data="tasksData" chart-labels="taskLabels" chart-colours="tasksColors" chart-legend="true"></canvas>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="col-md-12">
+
+	</div>
+
+
+</section>

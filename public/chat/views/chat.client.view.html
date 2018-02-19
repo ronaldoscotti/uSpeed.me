@@ -1,0 +1,58 @@
+<!-- The chat view -->
+<link rel="stylesheet" href="assets/css/chat.css">
+<script type="text/javascript" src="assets/js/chat.js"></script>
+
+<section data-ng-controller="ChatController">
+  <div class="row chat-window col-xs-5 col-md-3" id="chat_window_1" style="margin-left:10px;">
+    <div class="col-xs-12 col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading top-bar">
+          <div class="col-md-8 col-xs-8">
+            <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> Chat</h3>
+          </div>
+          <div class="col-md-4 col-xs-4" style="text-align: right;">
+            <a href="javascript:;"><span id="minim_chat_window" class="glyphicon glyphicon-minus text-orange icon_minim"></span></a>
+          </div>
+        </div>
+        <div class="panel-body msg_container_base">
+          <!-- List all messages -->
+          <div data-ng-repeat="message in messages" data-ng-switch="message.type">
+
+            <small data-ng-switch-when='status'>
+              <span data-ng-bind="message.created | date:'mediumTime'"></span>
+              <span data-ng-bind="message.username"></span>
+              <span>is</span>
+              <span data-ng-bind="message.text"></span>
+            </small>
+
+            <div class="row msg_container base_sent" data-ng-switch-default>
+              <div class="col-md-10 col-xs-10">
+                <div class="messages msg_sent">
+                  <p data-ng-bind="message.text"></p>
+                  <span>
+                    <time data-ng-bind="message.created | date:'mediumTime'"></time>
+                    <time data-ng-bind="message.username"></time>
+                  </span>
+                  </div>
+                </div>
+                <div class="col-md-2 col-xs-2 avatar">
+                  <img src="assets/img/user.png" class="img-responsive ">
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="panel-footer">
+            <form ng-submit="sendMessage();">
+              <div class="input-group">
+                <input id="btn-input" type="text" class="form-control input-sm chat_input" placeholder="Converse aqui..." data-ng-model="messageText"/>
+                <span class="input-group-btn">
+                  <button type="submit" class="btn btn-info btn-sm btn-chat" id="btn-chat">Enviar</button>
+                </span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

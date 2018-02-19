@@ -1,0 +1,97 @@
+<!-- The project view -->
+<section data-ng-controller="ProjectsController" data-ng-init="findOne()">
+	<h1 class="pull-left" data-ng-bind="project.title"></h1>
+	<!-- Show the editing buttons to the project creator -->
+	<div data-ng-show="authentication.user._id == project.creator._id">
+		<a class="btn btn-xs btn-default ml-25 mt-35" href="/#!/projects/{{project._id}}/edit"><i class="fa fa-pencil"></i> Editar</a>
+		<a class="btn btn-xs btn-danger mt-35"  href="/#!/" data-ng-click="delete();"><i class="fa fa-trash-o"></i> Apagar</a>
+	</div>
+	<div class="clearfix"></div>
+	<hr>
+	<div class="panel panel-default">
+		<div class="panel-body">
+
+			<small>
+				<em>Criado em</em>
+				<em data-ng-bind="project.created | date:'mediumDate'"></em>
+				<em>por</em>
+				<em data-ng-bind="project.creator.fullName"></em>
+			</small>
+
+			<div class="panel-item">
+				<b>Descrição:</b>
+				<p data-ng-bind="project.description"></p>
+			</div>
+
+			<div class="panel-item">
+				<div class="pull-left">
+					<b>Prazo de entrega:</b>
+					<p data-ng-bind="project.deadline | date:'shortDate'"></p>
+				</div>
+				<div class="pull-right mr-15">
+					<b>Status:</b>
+					<div ng-show="project.status == 'Em andamento'">
+						<div class="btn btn-warning btn-xs" data-ng-bind="project.status"></div>
+					</div>
+					<div ng-show="project.status == 'Finalizado'">
+						<div class="btn btn-success btn-xs" data-ng-bind="project.status"></div>
+					</div>
+					<div ng-show="project.status == 'Cancelado'">
+						<div class="btn btn-danger btn-xs" data-ng-bind="project.status"></div>
+					</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+			<div class="panel-item">
+				<b>Tarefas deste projeto</b>
+
+				<table class="table table-responsive table-striped">
+					<thead>
+						<td>Título</td>
+						<td>Projeto</td>
+						<td>Status</td>
+						<td>Prazo</td>
+						<td>Responsável</td>
+						<td>Ações</td>
+					</thead>
+					<tbody data-ng-repeat="task in tasks">
+						<tr ng-if="task.project._id == project._id">
+							<div >
+								<td><a data-ng-href="#!/tasks/{{task._id}}" data-ng-bind="task.title"></a></td>
+								<td data-ng-bind="task.project.title"></td>
+
+								<!-- Check what is the situation of the task and give the correct badge -->
+								<td ng-show="task.status == 'Por fazer'">
+									<div class="btn btn-warning btn-xs" data-ng-bind="task.status"></div>
+								</td>
+								<td ng-show="task.status == 'Fazendo'">
+									<div class="btn btn-primary btn-xs" data-ng-bind="task.status"></div>
+								</td>
+								<td ng-show="task.status == 'Feito'">
+									<div class="btn btn-success btn-xs" data-ng-bind="task.status"></div>
+								</td>
+								<td ng-show="task.status == 'Aguardando'">
+									<div class="btn btn-default btn-xs" data-ng-bind="task.status"></div>
+								</td>
+								<td ng-show="task.status == 'Cancelado'">
+									<div class="btn btn-danger btn-xs" data-ng-bind="task.status"></div>
+								</td>
+
+								<td data-ng-bind="task.deadline | date:'shortDate'"></td>
+								<td data-ng-bind="task.designated.fullName"></td>
+								<td>
+									<a data-ng-href="/#!/tasks/{{task._id}}" class="btn btn-xs btn-info"><i class="fa fa-eye"></i> Ver</a>
+									<a data-ng-href="/#!/tasks/{{task._id}}/edit" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> Editar</a>
+								</td>
+							</div>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</div>
+	<hr>
+	<a class="btn btn-sm btn-danger" href="/#!/projects"><i class="fa fa-chevron-left"></i> Voltar</a>
+</section>

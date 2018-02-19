@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Use the 'title' property to render a page title  -->
+	<title><%= title %> - uSpeed.me</title>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" type="image/png" href="assets/img/favicon.png"/>
+
+	<link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/css/login.css">
+
+	<link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,400italic' rel='stylesheet' type='text/css'>
+</head>
+<body class="signup">
+	<div class="container">
+
+		<div class="col-md-8">
+			<img src="assets/img/login/logo.png" alt="uSpeed.me" class="img-responsive logo-signup"/>
+			<h3 class="text-white">Do better, be agile.</h3>
+			<!--
+			<p class="text-white text-signup">
+				Ou entre com sua rede social:<br>
+				<a href="/oauth/facebook">
+					<span class="fa-stack fa-lg">
+						<i class="fa fa-circle fa-stack-2x text-blue"></i>
+						<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>
+
+				<a href="/oauth/twitter">
+					<span class="fa-stack fa-lg">
+						<i class="fa fa-circle fa-stack-2x text-light-blue"></i>
+						<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>
+
+				<a href="/oauth/google">
+					<span class="fa-stack fa-lg">
+						<i class="fa fa-circle fa-stack-2x text-red"></i>
+						<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>
+			</p>
+		-->
+		</div>
+
+		<div class="col-md-4">
+			<!-- Display flash messages  -->
+			<% for(var i in messages) { %>
+				<div class="flash alert alert-danger"><%= messages[i] %></div>
+				<% } %>
+
+				<div class="panel panel-login">
+					<div class="panel-body">
+						<div class="content">
+							<h3 class="text-center">Bem vindo ao time! :)</h3>
+							<hr>
+							<p class="text-center">Preencha o formulário para criar sua conta:</p>	<!-- Render the signup form  -->
+							<form action="/signup" method="post">
+								<div>
+									<input class="form-control" type="text" name="firstName" placeholder="Seu nome"/>
+								</div>
+								<div>
+									<input class="form-control" type="text" name="lastName" placeholder="Seu sobrenome" />
+								</div>
+								<div>
+									<input class="form-control" type="text" name="email" placeholder="Seu e-mail" />
+								</div>
+								<div>
+									<input class="form-control" type="text" name="username" placeholder="Nome de usuário" />
+								</div>
+								<div>
+									<input class="form-control" type="password" name="password" placeholder="Senha" />
+								</div>
+								<div>
+									<button type="submit" class="btn btn-login btn-block">CADASTRAR</button>
+								</div>
+								<p class="text-center footer-text">Já tem uma conta? <b><a href="/signin">Faça login!</a></b></p>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</body>
+	</html>

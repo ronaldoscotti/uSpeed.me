@@ -1,0 +1,69 @@
+body {
+  border-top: 5px solid #FE6033;
+  background-image: url('../img/login/bg-login-1.jpg');
+  background-size: cover;
+}
+
+body.signup {
+  background-image: url('../img/login/bg-login-2.jpg');
+  background-size: cover;
+  padding-top: 6%;
+}
+
+.logo { margin: 20% 0 15% 0; }
+.logo-signup { margin: 10% 0 5% 0; }
+
+.panel-login {
+  border-radius: 4px 4px 1px 1px;
+  border-top: 5px solid #FE6033;
+}
+
+.panel-body {
+    padding: 5px 25px;
+}
+
+.btn-login {
+  background-color: #FE6033;
+  color: #fff;
+  height: 45px;
+  font-size: 17px;
+  margin: 10px 0 20px 0;
+}
+
+.btn-login:hover {
+  background-color: #ea5227;
+  color: #fff;
+}
+
+.form-control {
+  font-size: 16px;
+  height: 45px;
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+
+.form-control:focus {
+  border-color: #FFA58C;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.025),0 0 5px rgba(102,175,233,.4);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.025),0 0 5px rgba(102,175,233,.4);
+}
+
+p.footer-text {
+  font-size: 15px;
+}
+
+a {color: #FE6033;}
+a:hover {color: #ea5227;}
+
+hr {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  border-top: 2px solid rgba(252, 103, 47, 0.67);
+}
+
+.text-signup { margin-top: 20px;}
+
+.text-white {color: #fafafa;}
+.text-blue {color: #3D5A98;}
+.text-light-blue {color: #5EA9DD;}
+.text-red {color: #DF4B38;}
